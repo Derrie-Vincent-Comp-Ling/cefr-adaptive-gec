@@ -1,0 +1,15 @@
+# 8. Conclusion and Future Work
+
+This dissertation presented a hybrid, error-type-aware grammatical error correction system with CEFR-adaptive feedback for L2 English writing. The hybrid selector routes each candidate edit to whichever of three engines — a rule-based checker (LanguageTool), a general-purpose language model (T5-small), and a parameter-efficiently fine-tuned model (LoRA flan-t5-base) — has the highest empirical precision for that ERRANT error type, under a minimum-precision threshold and a non-overlap constraint.
+
+## Summary of Findings
+
+On the held-out dev-eval partition (827 sentences, 70 essays; 692 matched pairs for ERRANT scoring), the hybrid achieved precision 0.4420, recall 0.0667, and F₀.₅ 0.2079 — a 248% improvement over the best individual engine (LanguageTool, F₀.₅ 0.0598). Precision rose relative to dev-tune (30.39% → 44.20%), showing the selection policy generalises rather than overfits. The three engines are genuinely complementary: LanguageTool dominates determiner and preposition categories, LoRA flan-t5-base attains perfect precision on pronouns and verb inflection/tense, and T5-small contributes narrowly on adjective form. Six of the top ten per-type F₀.₅ categories are verb-related, and spelling and adjective morphology account for most of the remaining mass. The selector modifies only 26.3% of sentences at a mean edit-ratio of 0.9950, producing targeted corrections that preserve learner voice.
+
+## Contributions
+
+This work contributes, first, a generalisable edit-level hybrid selector grounded in per-error-type precision analysis; second, a set of pedagogically motivated CEFR-adaptive feedback templates mapped to the ERRANT error taxonomy; third, empirical evidence that rule-based and neural GEC engines are genuinely complementary rather than substitutable; and fourth, an open-source Streamlit demonstrator and full reproduction pipeline that together make every headline number in this dissertation independently verifiable.
+
+## Future Work
+
+Four directions merit investigation. First, a learner-and-instructor evaluation of the CEFR-adaptive feedback, using the protocol described in Section 4.5.2, is essential before any claim of pedagogical validity can be made. Second, the Hybrid-NoPrior ablation (Section 4.4) should be completed to quantify the contribution of error-type priors relative to simple edit pooling. Third, the architecture should be extended to the document level to capture inter-sentential phenomena such as pronoun-chain coherence, which are ignored by the current sentence-isolated evaluation. Fourth, targeted data collection and per-L1 performance audits are required to address the representational bias of W&I+LOCNESS before any institutional deployment, and QLoRA or full fine-tuning should be explored as routes to extending the fine-tuned engine's high-precision coverage. Together these directions would move the system from a research prototype, as presented here, toward a responsibly deployable pedagogical tool.

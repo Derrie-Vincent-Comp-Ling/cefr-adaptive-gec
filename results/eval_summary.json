@@ -1,0 +1,34 @@
+{
+  "languagetool": {
+    "TP": 310,
+    "FP": 6530,
+    "FN": 4636,
+    "precision": 0.0453,
+    "recall": 0.0627,
+    "f05": 0.048
+  },
+  "t5-small-gec": {
+    "TP": 101,
+    "FP": 12456,
+    "FN": 4845,
+    "precision": 0.008,
+    "recall": 0.0204,
+    "f05": 0.0092
+  },
+  "lora-flan-t5-base": {
+    "TP": 60,
+    "FP": 5763,
+    "FN": 4886,
+    "precision": 0.0103,
+    "recall": 0.0121,
+    "f05": 0.0106
+  },
+  "hybrid": {
+    "TP": 299,
+    "FP": 685,
+    "FN": 4647,
+    "precision": 0.3039,
+    "recall": 0.0605,
+    "f05": 0.1683
+  }
+}

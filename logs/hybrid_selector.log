@@ -1,0 +1,18 @@
+2026-04-14 10:37:43,481 | INFO | Hybrid selector — seed=42, MIN_PRECISION=0.10
+2026-04-14 10:37:43,481 | INFO | Loaded priors for 3 engines from /Users/derrie-annvincent/Desktop/dissertation_gec/results/engine_priors.json
+2026-04-14 10:37:43,481 | INFO | === Processing dev_tune with 3 engines ===
+2026-04-14 10:37:43,491 | INFO |   Loaded 3500 predictions for languagetool
+2026-04-14 10:37:43,506 | INFO |   Loaded 3500 predictions for t5-small-gec
+2026-04-14 10:37:43,519 | INFO |   Loaded 3500 predictions for lora-flan-t5-base
+2026-04-14 10:37:43,520 | INFO |   3500 unique sentences to process
+2026-04-14 10:37:43,520 | INFO | Loading ERRANT annotator (en_core_web_sm) …
+2026-04-14 10:37:43,924 | INFO | ERRANT annotator ready
+2026-04-14 10:37:59,819 | INFO |   [500/3500] sentences processed
+2026-04-14 10:38:13,488 | INFO |   [1000/3500] sentences processed
+2026-04-14 10:38:27,525 | INFO |   [1500/3500] sentences processed
+2026-04-14 10:38:42,106 | INFO |   [2000/3500] sentences processed
+2026-04-14 10:38:58,003 | INFO |   [2500/3500] sentences processed
+2026-04-14 10:39:19,473 | INFO |   [3000/3500] sentences processed
+2026-04-14 10:39:37,475 | INFO |   [3500/3500] sentences processed
+2026-04-14 10:39:37,500 | INFO |   Saved 3500 hybrid predictions to /Users/derrie-annvincent/Desktop/dissertation_gec/results/hybrid_dev_tune_preds.jsonl
+2026-04-14 10:39:37,501 | INFO | Skipping dev_eval — fewer than 2 engine prediction files found

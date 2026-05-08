@@ -1,0 +1,14 @@
+2026-04-09 11:59:53,649 | INFO | seed=42
+2026-04-09 11:59:54,012 | INFO | Loaded spaCy model: core_web_sm
+2026-04-09 11:59:54,031 | INFO | Loaded 1300 essays from A.train.json
+2026-04-09 12:00:43,356 | INFO | Loaded 1000 essays from B.train.json
+2026-04-09 12:01:44,633 | INFO | Loaded 700 essays from C.train.json
+2026-04-09 12:02:37,008 | INFO | Total train sentence records: 33391
+2026-04-09 12:02:37,014 | INFO | Loaded 130 essays from A.dev.json
+2026-04-09 12:02:41,924 | INFO | Loaded 100 essays from B.dev.json
+2026-04-09 12:02:47,892 | INFO | Loaded 70 essays from C.dev.json
+2026-04-09 12:02:53,271 | INFO | Loaded 50 essays from N.dev.json
+2026-04-09 12:02:59,085 | INFO | Total val sentence records: 4327
+2026-04-09 12:02:59,245 | INFO | Wrote 33391 records to /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/train_records.jsonl
+2026-04-09 12:02:59,265 | INFO | Wrote 4327 records to /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/val_records.jsonl
+2026-04-09 12:02:59,270 | INFO | CEFR distribution saved to /Users/derrie-annvincent/Desktop/dissertation_gec/results/cefr_distribution.json

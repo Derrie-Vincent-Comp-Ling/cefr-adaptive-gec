@@ -1,0 +1,67 @@
+# 3. Data and Preprocessing
+
+## 3.1 Corpus Selection
+
+The choice of learner corpus — a collection of texts written by language learners paired with corrections produced by human annotators — is consequential for any grammatical error correction (GEC) system, since it determines the range of proficiency levels, error types, and first-language (L1) backgrounds the system can address. Several large-scale learner corpora exist, each with distinctive properties. The NUCLE corpus (Dahlmeier, Ng and Wu, 2013) comprises 1,414 essays written by National University of Singapore students and annotated by professional English instructors; however, its L1 coverage is narrow (predominantly Mandarin Chinese speakers) and its proficiency band is restricted to advanced undergraduates. The Lang-8 corpus (Mizumoto et al., 2011) and its cleaned derivative cLang-8 (Rothe et al., 2021) offer substantially more data — over two million sentence pairs — but annotations are crowd-sourced from non-expert users, introducing noise and inconsistency that can degrade supervised training. The EFCAMDAT corpus (Geertzen, Alexopoulou and Korhonen, 2013) provides graded Cambridge examinations at scale, yet it is not distributed with gold-standard annotations in the M2 format — a standardised plain-text schema that records the source sentence followed by an indexed list of annotator edits — which is required by the ERRANT evaluation toolkit (Bryant, Felice and Briscoe, 2017).
+
+The Write & Improve + LOCNESS (W&I+LOCNESS) corpus, version 2.1, released as part of the BEA-2019 Shared Task on GEC (Bryant et al., 2019), was selected as the primary dataset for this project. Three properties make it uniquely suited. First, every learner essay is labelled with a Common European Framework of Reference for Languages (CEFR) proficiency level — A (beginner), B (intermediate), or C (advanced) — assigned by Cambridge Assessment examiners, which directly supports the CEFR-adaptive dimension of the present system. Second, error annotations follow the M2 format, enabling deterministic reconstruction of gold-standard target sentences (i.e., the corrected version that an examiner would produce) and seamless integration with ERRANT for edit extraction and scoring. Third, the corpus includes a native-speaker control partition (LOCNESS, labelled N), permitting evaluation of the system's behaviour on text that requires minimal or no correction and guarding against over-correction of already-fluent writing. No other publicly available corpus simultaneously provides CEFR labels, M2 annotations, and a native-speaker control set.
+
+The JFLEG corpus (Napoles, Sakaguchi and Tetreault, 2017) was retained as an external fluency-oriented evaluation set. Unlike W&I+LOCNESS, JFLEG provides four independent reference corrections per source sentence and emphasises fluency — whether the rewritten sentence reads naturally — rather than minimal-edit accuracy. It is evaluated with the GLEU metric (Napoles et al., 2015), a GEC-adapted variant of the BLEU machine-translation metric that rewards n-gram overlap with any of the fluent references. Including JFLEG provides a complementary evaluation axis and guards against over-fitting to the single-reference M2 annotation style.
+
+## 3.2 Corpus Composition
+
+Table 3.1 summarises the distribution of sentences across CEFR levels after preprocessing. The training partition contains 33,391 sentence-level records drawn from three proficiency bands; the validation partition adds a fourth band (N) corresponding to the LOCNESS native-speaker essays. The slight imbalance towards B-level writers (37.8% of training data) reflects the natural distribution of the Cambridge examination population and was preserved rather than artificially balanced, following the recommendation of Bryant et al. (2019) to maintain ecological validity.
+
+**Table 3.1. Sentence-level record counts by CEFR level and split.**
+
+| CEFR Level | Train | Validation |
+|:----------:|------:|-----------:|
+| A          | 10,327 | 1,038 |
+| B          | 12,614 | 1,256 |
+| C          | 10,450 | 1,040 |
+| N          | —     | 993        |
+| **Total**  | **33,391** | **4,327** |
+
+At the essay level, the original W&I+LOCNESS release comprises 34,308 training pairs and 4,384 development pairs when parsed from the per-level M2 files (A.train.gold.bea19.m2, B.train.gold.bea19.m2 and C.train.gold.bea19.m2 for training; A.dev.gold.bea19.m2 through N.dev.gold.bea19.m2 for development). The small discrepancy between the 34,308 essay-level pairs and the 33,391 sentence-level records reported above arises from two preprocessing steps: sentence segmentation was performed with the spaCy natural-language processing library (en_core_web_sm model), whose statistical sentenciser occasionally merges short fragments into a single unit, and a minimum-length filter of three tokens was applied to exclude trivially short segments that carry insufficient context for supervised training.
+
+## 3.3 CEFR Label Propagation
+
+The M2 files in the BEA-2019 release are partitioned by CEFR level (e.g., A.train.gold.bea19.m2 contains only A-level essays). This structure was exploited to assign CEFR labels deterministically at the sentence level: each sentence inherits the proficiency label of the M2 file from which its parent essay originates. No probabilistic classifier or external proficiency estimation tool was employed. This design choice avoids a cascading-error problem, whereby classification mistakes made by an upstream CEFR predictor — which even strong models can make with non-trivial frequency, as demonstrated by Vajjala and Rama (2018) — propagate into the downstream correction stage and confound any analysis of how feedback varies with proficiency. The CEFR labels were further mapped from fine-grained sub-bands (A2.i, B1.ii, and so on) to coarse bands (A, B, C) to match the granularity of the feedback adaptation strategy described in Section 4.
+
+## 3.4 Preprocessing Pipeline
+
+Preprocessing followed a five-step pipeline, implemented as a set of standalone scripts. Each script produces a JSONL (JSON Lines) checkpoint file, a plain-text format in which every line is a self-contained JSON record. Saving intermediate outputs in this way supports full reproducibility and allows the data to be inspected at every stage.
+
+**Step 1: Dataset summarisation** (`data/summarise_datasets.py`). The raw M2 files for W&I+LOCNESS and the source and reference files for JFLEG were parsed to produce a summary of split sizes, sample entries and annotation counts, logged to `logs/dataset_summary.json`. This step served as a data-integrity check before any transformation, confirming that the inputs matched the expected size and structure.
+
+**Step 2: Normalisation to a unified JSONL schema** (`data/normalise_to_jsonl.py`). Both W&I+LOCNESS and JFLEG were converted into a common record format: `{id, dataset, split, cefr, source, target, references, edits}`. For W&I+LOCNESS, gold-standard target sentences were reconstructed by applying the edits of the first human annotator (annotator 0) to the source sentence. Edits were applied in reverse token order (right-to-left through the sentence) to avoid an index-shift problem: applying an early edit first would shift the token positions of all later edits, causing them to point to the wrong words. JFLEG entries retained all four reference corrections in the `references` field, since JFLEG is designed for multi-reference fluency evaluation. Outputs were written to `data/processed/wi_locness.train.jsonl` (34,308 entries), `wi_locness.dev.jsonl` (4,384 entries), `jfleg.dev.jsonl` (754 entries) and `jfleg.test.jsonl` (747 entries).
+
+**Step 3: Sentence-level record construction** (`data/build_records.py`). Each essay-level JSON record was split into individual sentences using the spaCy library's `en_core_web_sm` sentence segmenter. Every resulting sentence record stores a tokenised surface string (`tok_form`, used as model input), a detokenised surface string (`detok_form`, used for human-readable output), the mapped CEFR band, and the identifier of the parent essay. Sentences shorter than three tokens were discarded, since they carry too little context to support training. This step produced `data/processed/train_records.jsonl` (33,391 records) and `data/processed/val_records.jsonl` (4,327 records).
+
+**Step 4: Validation split stratification** (`data/split_dev.py`). The 4,327 validation records were partitioned into two subsets: a *dev-tune* subset (3,500 sentences from 280 essays), used for hyperparameter selection, and a *dev-eval* held-out subset (827 sentences from 70 essays), reserved for final evaluation. The split was computed with scikit-learn's `GroupShuffleSplit` at an 80/20 ratio with a fixed random seed of 42. Grouping was done at the essay level rather than the sentence level: this prevents sentences from the same essay appearing on opposite sides of the split, which would otherwise leak shared topic and discourse context across the boundary and inflate evaluation metrics. The mapping of essay identifiers to subsets was logged to `logs/split_ids.json`.
+
+**Step 5: Source–target pair extraction** (`data/extract_pairs.py`). The per-level M2 files were re-parsed to extract aligned source–target sentence pairs with CEFR labels, producing `data/processed/train_pairs.jsonl` (34,308 pairs) and `data/processed/dev_pairs.jsonl` (4,357 pairs). Step 5 uses native M2 sentence boundaries rather than the spaCy segmentation applied in Step 3, which produces 30 additional pairs in the validation split. These pairs serve as the gold standard for ERRANT-based evaluation in Sections 4 and 6.
+
+## 3.5 JFLEG as an External Evaluation Set
+
+The JFLEG corpus was not used at any stage of model training or hyper-parameter tuning. Its role is restricted to external evaluation, providing a fluency-oriented complement to the precision-focused ERRANT scoring applied to W&I+LOCNESS. JFLEG's four-reference design and GLEU metric capture improvements in naturalness and readability that a single-reference F0.5 score may undervalue — a fluent rewrite that differs from the sole M2 reference would otherwise be penalised. Including JFLEG guards against the risk that a system optimised for minimal-edit precision on W&I+LOCNESS fails to produce natural-sounding output in a broader evaluation context. JFLEG results are reported separately in Section 6 to maintain a clear distinction between in-domain and out-of-domain evaluation.
+
+## References
+
+Bryant, C., Felice, M. and Briscoe, T. (2017) 'Automatic annotation and evaluation of error types for grammatical error correction', in *Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*. Vancouver: Association for Computational Linguistics, pp. 793–805.
+
+Bryant, C., Felice, M., Andersen, Ø.E. and Briscoe, T. (2019) 'The BEA-2019 shared task on grammatical error correction', in *Proceedings of the Fourteenth Workshop on Innovative Use of NLP for Building Educational Applications*. Florence: Association for Computational Linguistics, pp. 52–75.
+
+Dahlmeier, D., Ng, H.T. and Wu, S.M. (2013) 'Building a large annotated corpus of learner English: The NUS Corpus of Learner English', in *Proceedings of the Eighth Workshop on Innovative Use of NLP for Building Educational Applications*. Atlanta: Association for Computational Linguistics, pp. 22–31.
+
+Geertzen, J., Alexopoulou, T. and Korhonen, A. (2013) 'Automatic linguistic annotation of large scale L2 databases: The EF-Cambridge Open Language Database (EFCAMDAT)', in *Proceedings of the 31st Second Language Research Forum*. Somerville, MA: Cascadilla Proceedings Project.
+
+Mizumoto, T., Komachi, M., Nagata, M. and Matsumoto, Y. (2011) 'Mining revision log of language learning SNS for automated Japanese error correction of second language learners', in *Proceedings of the 5th International Joint Conference on Natural Language Processing*. Chiang Mai: Asian Federation of Natural Language Processing, pp. 147–155.
+
+Napoles, C., Sakaguchi, K., Post, M. and Tetreault, J. (2015) 'Ground truth for grammatical error correction metrics', in *Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 2: Short Papers)*. Beijing: Association for Computational Linguistics, pp. 588–593.
+
+Napoles, C., Sakaguchi, K. and Tetreault, J. (2017) 'JFLEG: A fluency corpus and benchmark for grammatical error correction', in *Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics (Volume 2: Short Papers)*. Valencia: Association for Computational Linguistics, pp. 229–234.
+
+Rothe, S., Mallinson, J., Malmi, E., Krause, S. and Severyn, A. (2021) 'A simple recipe for multilingual grammatical error correction', in *Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 2: Short Papers)*. Online: Association for Computational Linguistics, pp. 702–707.
+
+Vajjala, S. and Rama, T. (2018) 'Experiments with universal CEFR classification', in *Proceedings of the Thirteenth Workshop on Innovative Use of NLP for Building Educational Applications*. New Orleans: Association for Computational Linguistics, pp. 147–153.

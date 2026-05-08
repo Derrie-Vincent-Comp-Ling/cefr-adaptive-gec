@@ -1,0 +1,12 @@
+2026-04-09 15:05:57,929 | INFO | seed=42
+2026-04-09 15:05:57,929 | INFO | Extracting train pairs...
+2026-04-09 15:05:58,013 | INFO |   A.train.gold.bea19.m2 (A): 10493 pairs
+2026-04-09 15:05:58,103 | INFO |   B.train.gold.bea19.m2 (B): 13032 pairs
+2026-04-09 15:05:58,162 | INFO |   C.train.gold.bea19.m2 (C): 10783 pairs
+2026-04-09 15:05:58,291 | INFO | Wrote 34308 records to /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/train_pairs.jsonl
+2026-04-09 15:05:58,291 | INFO | Extracting dev pairs...
+2026-04-09 15:05:58,302 | INFO |   A.dev.gold.bea19.m2 (A): 1037 pairs
+2026-04-09 15:05:58,311 | INFO |   B.dev.gold.bea19.m2 (B): 1290 pairs
+2026-04-09 15:05:58,318 | INFO |   C.dev.gold.bea19.m2 (C): 1069 pairs
+2026-04-09 15:05:58,325 | INFO |   N.dev.gold.bea19.m2 (N): 988 pairs
+2026-04-09 15:05:58,342 | INFO | Wrote 4384 records to /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/dev_pairs.jsonl

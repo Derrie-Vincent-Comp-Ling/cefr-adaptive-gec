@@ -1,0 +1,7 @@
+2026-04-09 12:05:23,121 | INFO | seed=42
+2026-04-09 12:05:23,134 | INFO | Loaded 4327 records from /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/val_records.jsonl
+2026-04-09 12:05:23,138 | INFO | dev-tune: 3500 sentences, dev-eval: 827 sentences
+2026-04-09 12:05:23,155 | INFO | Wrote 3500 records to /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/dev_tune.jsonl
+2026-04-09 12:05:23,160 | INFO | Wrote 827 records to /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/dev_eval.jsonl
+2026-04-09 12:05:23,161 | INFO | Essay IDs saved to /Users/derrie-annvincent/Desktop/dissertation_gec/logs/split_ids.json
+2026-04-09 12:05:23,161 | INFO | No essay overlap between splits (verified)

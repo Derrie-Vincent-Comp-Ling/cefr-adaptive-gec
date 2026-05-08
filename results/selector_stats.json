@@ -1,0 +1,55 @@
+{
+  "dev_tune": {
+    "total_sentences": 3500,
+    "sentences_changed": 922,
+    "sentences_changed_pct": 26.34,
+    "mean_edit_ratio": 0.995002,
+    "total_edits_selected": 1225,
+    "engine_contributions_sentences": {
+      "languagetool": 637,
+      "t5-small-gec": 300,
+      "lora-flan-t5-base": 85
+    },
+    "engine_contributions_pct_of_partition": {
+      "languagetool": 18.2,
+      "t5-small-gec": 8.57,
+      "lora-flan-t5-base": 2.43
+    },
+    "engine_contributions_pct_of_changed": {
+      "languagetool": 69.09,
+      "t5-small-gec": 32.54,
+      "lora-flan-t5-base": 9.22
+    },
+    "cefr_distribution": {
+      "UNK": 3500
+    }
+  },
+  "dev_eval": {
+    "total_sentences": 827,
+    "sentences_changed": 190,
+    "sentences_changed_pct": 22.97,
+    "mean_edit_ratio": 0.996026,
+    "total_edits_selected": 0,
+    "engine_contributions_sentences": {
+      "languagetool": 137,
+      "t5-small-gec": 60,
+      "lora-flan-t5-base": 18
+    },
+    "engine_contributions_pct_of_partition": {
+      "languagetool": 16.57,
+      "t5-small-gec": 7.26,
+      "lora-flan-t5-base": 2.18
+    },
+    "engine_contributions_pct_of_changed": {
+      "languagetool": 72.11,
+      "t5-small-gec": 31.58,
+      "lora-flan-t5-base": 9.47
+    },
+    "cefr_distribution": {
+      "A": 251,
+      "B": 228,
+      "C": 156,
+      "N": 192
+    }
+  }
+}

@@ -1,0 +1,11 @@
+2026-04-14 11:17:03,313 | INFO | seed=42
+2026-04-14 11:17:03,317 | INFO | Loaded 827 records from /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/dev_eval.jsonl
+2026-04-14 11:17:03,318 | INFO | Loading t5-small for GEC baseline …
+2026-04-14 11:17:04,344 | INFO | t5-small ready on cpu
+2026-04-14 11:20:04,048 | INFO |   [T5] 200 / 827 sentences processed
+2026-04-14 11:23:17,084 | INFO |   [T5] 400 / 827 sentences processed
+2026-04-14 11:27:38,115 | INFO |   [T5] 600 / 827 sentences processed
+2026-04-14 11:31:34,201 | INFO |   [T5] 800 / 827 sentences processed
+2026-04-14 11:32:09,434 | INFO |   [T5] 827 / 827 sentences processed
+2026-04-14 11:32:09,435 | INFO | Done in 905.1 s (0.9 sent/s)
+2026-04-14 11:32:09,448 | INFO | Predictions saved to /Users/derrie-annvincent/Desktop/dissertation_gec/results/tagger_dev_eval_preds.jsonl

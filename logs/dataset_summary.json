@@ -1,0 +1,28 @@
+{
+  "seed": 42,
+  "datasets": {
+    "wi_locness": {
+      "source": "Cambridge BEA-2019 v2.1 (M2)",
+      "path": "/Users/derrie-annvincent/Desktop/dissertation_gec/data/raw/wi_locness/wi+locness/m2",
+      "splits": {
+        "A.train": 10493,
+        "B.train": 13032,
+        "C.train": 10783,
+        "ABC.train": 34308,
+        "A.dev": 1037,
+        "B.dev": 1290,
+        "C.dev": 1069,
+        "N.dev": 988,
+        "ABCN.dev": 4384
+      }
+    },
+    "jfleg": {
+      "source": "keisks/jfleg (GitHub)",
+      "path": "/Users/derrie-annvincent/Desktop/dissertation_gec/data/raw/jfleg",
+      "splits": {
+        "dev": 754,
+        "test": 747
+      }
+    }
+  }
+}

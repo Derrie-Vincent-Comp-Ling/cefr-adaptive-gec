@@ -1,0 +1,26 @@
+2026-04-14 13:42:10,597 | INFO | Dev-eval full pipeline — seed=42
+2026-04-14 13:42:10,602 | INFO | Loaded 827 predictions for languagetool
+2026-04-14 13:42:10,607 | INFO | Loaded 827 predictions for t5-small-gec
+2026-04-14 13:42:10,610 | INFO | Loaded 827 predictions for lora-flan-t5-base
+2026-04-14 13:42:10,611 | INFO | 827 unique sentences
+2026-04-14 13:42:10,611 | INFO | Running hybrid selection …
+2026-04-14 13:42:10,611 | INFO | Loading ERRANT annotator (en_core_web_sm) …
+2026-04-14 13:42:11,026 | INFO | ERRANT annotator ready
+2026-04-14 13:42:16,619 | INFO |   [200/827]
+2026-04-14 13:42:22,852 | INFO |   [400/827]
+2026-04-14 13:42:30,039 | INFO |   [600/827]
+2026-04-14 13:42:38,205 | INFO |   [800/827]
+2026-04-14 13:42:39,378 | INFO | Saved 827 hybrid predictions to /Users/derrie-annvincent/Desktop/dissertation_gec/results/hybrid_dev_eval_preds.jsonl
+2026-04-14 13:42:39,388 | INFO | Loaded 4357 gold pairs
+2026-04-14 13:42:39,392 | INFO | languagetool: matched 692 / 827 to gold
+2026-04-14 13:42:39,392 | INFO | Computing ERRANT F0.5 for languagetool …
+2026-04-14 13:42:51,960 | INFO |   languagetool: P=0.0574 R=0.0717 F0.5=0.0598
+2026-04-14 13:42:51,967 | INFO | t5-small-gec: matched 692 / 827 to gold
+2026-04-14 13:42:51,967 | INFO | Computing ERRANT F0.5 for t5-small-gec …
+2026-04-14 13:43:12,146 | INFO |   t5-small-gec: P=0.0102 R=0.0233 F0.5=0.0115
+2026-04-14 13:43:12,153 | INFO | lora-flan-t5-base: matched 692 / 827 to gold
+2026-04-14 13:43:12,153 | INFO | Computing ERRANT F0.5 for lora-flan-t5-base …
+2026-04-14 13:43:24,918 | INFO |   lora-flan-t5-base: P=0.0101 R=0.0108 F0.5=0.0102
+2026-04-14 13:43:24,923 | INFO | hybrid: matched 692 / 827 to gold
+2026-04-14 13:43:24,923 | INFO | Computing ERRANT F0.5 for hybrid …
+2026-04-14 13:43:41,837 | INFO |   hybrid: P=0.4420 R=0.0667 F0.5=0.2079

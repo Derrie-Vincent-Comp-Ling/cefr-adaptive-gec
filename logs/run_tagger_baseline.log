@@ -1,0 +1,14 @@
+2026-04-09 15:51:43,053 | INFO | seed=42
+2026-04-09 15:51:43,064 | INFO | Loaded 3500 records from /Users/derrie-annvincent/Desktop/dissertation_gec/data/processed/dev_tune.jsonl
+2026-04-09 15:51:43,066 | INFO | Loading t5-small for GEC baseline …
+2026-04-09 15:51:52,042 | INFO | t5-small ready on cpu
+2026-04-09 15:51:52,042 | INFO | Running t5-small-gec on 3500 sentences …
+2026-04-09 16:00:39,894 | INFO |   [T5] 500 / 3500 sentences processed
+2026-04-09 16:09:07,033 | INFO |   [T5] 1000 / 3500 sentences processed
+2026-04-09 16:18:20,797 | INFO |   [T5] 1500 / 3500 sentences processed
+2026-04-09 16:27:29,949 | INFO |   [T5] 2000 / 3500 sentences processed
+2026-04-09 16:37:37,082 | INFO |   [T5] 2500 / 3500 sentences processed
+2026-04-09 16:48:58,989 | INFO |   [T5] 3000 / 3500 sentences processed
+2026-04-09 17:00:06,233 | INFO |   [T5] 3500 / 3500 sentences processed
+2026-04-09 17:00:06,236 | INFO | Done in 4094.2 s (0.9 sent/s)
+2026-04-09 17:00:06,274 | INFO | Predictions saved to /Users/derrie-annvincent/Desktop/dissertation_gec/results/tagger_dev_tune_preds.jsonl

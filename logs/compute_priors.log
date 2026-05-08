@@ -1,0 +1,17 @@
+2026-04-12 15:52:10,403 | INFO | seed=42
+2026-04-12 15:52:10,415 | INFO | Loaded 4357 gold pairs from dev_pairs.jsonl
+2026-04-12 15:52:10,425 | INFO | Loaded 3500 predictions for languagetool
+2026-04-12 15:52:10,426 | INFO |   languagetool: matched=3022, unmatched=478
+2026-04-12 15:52:10,426 | INFO |   Computing ERRANT precision by type for languagetool (3022 pairs) …
+2026-04-12 15:52:10,426 | INFO | Loading ERRANT annotator (en_core_web_sm) …
+2026-04-12 15:52:10,836 | INFO | ERRANT annotator ready
+2026-04-12 15:53:09,333 | INFO |   languagetool: 38 error types found
+2026-04-12 15:53:09,349 | INFO | Loaded 3500 predictions for t5-small-gec
+2026-04-12 15:53:09,351 | INFO |   t5-small-gec: matched=3022, unmatched=478
+2026-04-12 15:53:09,351 | INFO |   Computing ERRANT precision by type for t5-small-gec (3022 pairs) …
+2026-04-12 15:54:18,299 | INFO |   t5-small-gec: 44 error types found
+2026-04-12 15:54:18,313 | INFO | Loaded 3500 predictions for lora-flan-t5-base
+2026-04-12 15:54:18,315 | INFO |   lora-flan-t5-base: matched=3022, unmatched=478
+2026-04-12 15:54:18,315 | INFO |   Computing ERRANT precision by type for lora-flan-t5-base (3022 pairs) …
+2026-04-12 15:55:16,991 | INFO |   lora-flan-t5-base: 26 error types found
+2026-04-12 15:55:16,995 | INFO | Priors saved to /Users/derrie-annvincent/Desktop/dissertation_gec/results/engine_priors.json

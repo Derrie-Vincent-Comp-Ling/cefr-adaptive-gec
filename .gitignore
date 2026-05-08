@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+~$*
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project: raw and processed corpora are excluded due to license restrictions
+# (W&I+LOCNESS v2.1 and JFLEG must be downloaded from their original sources).
+# See README.md for download instructions.
+data/raw/
+data/processed/
+
+# Project: experiment scratch outputs
+logs/*.tmp
+results/scratch/
+
+# Compiled dissertation documents are not redistributed in this repository
+# (the Markdown sources under writing/section*.md remain public).
+dissertation*.docx
+dissertation*.pdf
+
+# Word lock files
+~$*.docx
+~$*.pdf
